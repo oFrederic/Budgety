@@ -13,9 +13,10 @@ Build a mini interactive buget website. (Focusing on JavaSript part)
 - IIFE
 - Closure
 - Module Pattern
+- Data Structure
 
 Still in progress...
 
 <h2>Project status</h2>
 
-In Development
+In Development...
