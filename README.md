@@ -1,24 +1,21 @@
-<h1 align="center">Name</h1>
-<br/>
+<h1 align="center">Budgety</h1>
 
 <h2>About</h2>
-Website that can help you for the gestion of your budget
+
+A website that can help you with the management of your budget.
 
 <h2>Goal and requirements</h2>
 
-Build a mini interactive buget website, focusing on the javascript part.
+Build a mini interactive buget website. (Focusing on JavaSript part)
 
 <h2>Key learnings</h2>
 
 - IIFE
-- Closure 
-- Module Pattern 
+- Closure
+- Module Pattern
 
 Still in progress...
 
 <h2>Project status</h2>
+
 In Development
-
-<h2>Credits</h2>
-
-- Author: <a href="https://twitter.com/jonasschmedtman" target="_blank">Jonas Schmedtman</a>
