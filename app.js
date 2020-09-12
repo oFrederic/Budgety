@@ -1,11 +1,14 @@
+// DATA MODULE: budget controller.
 var budgetController = (function () {
-  //Data Module
+  // some code
 })();
 
+// UI MODULE: UI controller.
 var UIController = (function () {
-  //UI Module
+  // some code
 })();
 
-var controller = (function () {
-  //Constroller Module
-})();
+// CONTROLLER MODULE: global app controller.
+var controller = (function (budgetCtrl, UICtrl) {
+  // some code
+})(budgetController, UIController);
