@@ -13,15 +13,16 @@ const UIController = (function () {
     DOMstring: {
       inputType: ".add__type",
       inputDescription: ".add__description",
-      inputValue: ".add__value",
+      inputAmount: ".add__value",
       inputBtn: ".add__btn",
     },
-    getInput: function () {
+
+    getNewBudgetEntry: function () {
       return {
-        input: document.querySelector(this.DOMstring.inputType).value, // inc or exp (+ or -)
+        type: document.querySelector(this.DOMstring.inputType).value, // inc or exp (+ or -)
         description: document.querySelector(this.DOMstring.inputDescription)
           .value,
-        value: document.querySelector(this.DOMstring.inputValue).value,
+        amount: document.querySelector(this.DOMstring.inputAmount).value,
       };
     },
   };
@@ -42,8 +43,10 @@ const controller = (function (budgetCtrl, UICtrl) {
 
   const ctrlAddItem = function () {
     //1. get input value
-    const input = UICtrl.getInput();
-    //2. add new item to data
+    const input = UICtrl.getNewBudgetEntry();
+    if (input.description !== "" && input.amount !== 0) {
+      //2. add new item to data
+    }
     //3. calculate budget data
     //4. add new item to UI
   };
