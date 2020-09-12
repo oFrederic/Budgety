@@ -1,14 +1,14 @@
 /**********************************************
  *** DATA MODULE: budget controller
  **********************************************/
-var budgetController = (function () {
+const budgetController = (function () {
   // some code
 })();
 
 /**********************************************
  *** UI MODULE: UI controller
  **********************************************/
-var UIController = (function () {
+const UIController = (function () {
   return {
     DOMstring: {
       inputType: ".add__type",
@@ -30,20 +30,32 @@ var UIController = (function () {
 /**********************************************
  *** CONTROLLER MODULE: global app controller
  **********************************************/
-var controller = (function (budgetCtrl, UICtrl) {
-  var ctrlAddItem = function () {
+const controller = (function (budgetCtrl, UICtrl) {
+  const setupEventListener = function () {
+    const DOM = UICtrl.DOMstring;
+
+    document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
+    document.addEventListener("keypress", function (event) {
+      if (event.key === "Enter") ctrlAddItem();
+    });
+  };
+
+  const ctrlAddItem = function () {
     //1. get input value
-    var input = UICtrl.getInput();
+    const input = UICtrl.getInput();
     //2. add new item to data
     //3. calculate budget data
     //4. add new item to UI
   };
 
-  document
-    .querySelector(UICtrl.DOMstring.inputBtn)
-    .addEventListener("click", ctrlAddItem);
-
-  document.addEventListener("keypress", function (event) {
-    if (event.key === "Enter") ctrlAddItem();
-  });
+  return {
+    init: function () {
+      setupEventListener();
+    },
+  };
 })(budgetController, UIController);
+
+/**********************************************
+ *** INITIALIZATION
+ **********************************************/
+controller.init();
