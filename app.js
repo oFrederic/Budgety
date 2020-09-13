@@ -79,6 +79,18 @@ const UIController = (function () {
       };
     },
 
+    clearField: function () {
+      const field = document.querySelectorAll(
+        `${DOMstrings.inputDescription}, ${DOMstrings.inputAmount}`
+      );
+
+      field.forEach(function (element) {
+        element.value = "";
+      });
+
+      field.item(0).focus();
+    },
+
     addBudgetUI: function (obj, type) {
       let el, html;
 
@@ -116,8 +128,9 @@ const controller = (function (budgetCtrl, UICtrl) {
   };
 
   const ctrlAddItem = function () {
-    //1. get input value
+    //1. get input value and clear field
     const input = UICtrl.getNewBudgetEntry();
+    UICtrl.clearField();
 
     //2. add input to data
     const item = budgetCtrl.addItem(
