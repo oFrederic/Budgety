@@ -2,7 +2,59 @@
  *** DATA MODULE: budget controller
  **********************************************/
 const budgetController = (function () {
-  // some code
+  const Income = function (id, description, amount) {
+    this.id = id;
+    this.description = description;
+    this.amount = amount;
+  };
+
+  const Expense = function (id, description, amount) {
+    this.id = id;
+    this.description = description;
+    this.amount = amount;
+  };
+
+  const data = {
+    allItems: {
+      exp: [],
+      inc: [],
+    },
+
+    total: {
+      exp: 0,
+      inc: 0,
+    },
+  };
+
+  return {
+    addItem: function (type, description, amount) {
+      let item, id;
+
+      // create unique id
+      if (data.allItems[type].length > 0) {
+        id = data.allItems[type][data.allItems[type].length - 1].id + 1;
+      } else {
+        id = 0;
+      }
+
+      // init object with correct data
+      if (type === "inc") {
+        item = new Income(id, description, amount);
+      } else {
+        item = new Expense(id, description, amount);
+      }
+
+      // save data
+      data.allItems[type].push(item);
+
+      // return object itself
+      return item;
+    },
+
+    test: function () {
+      console.log(data); // ONLY FOR TESTING PURPOSE, DELETE LATER ON!!!!!
+    },
+  };
 })();
 
 /**********************************************
@@ -44,9 +96,13 @@ const controller = (function (budgetCtrl, UICtrl) {
   const ctrlAddItem = function () {
     //1. get input value
     const input = UICtrl.getNewBudgetEntry();
+    //2. add new item to data
     if (input.description !== "" && input.amount !== 0) {
-      console.log(input);
-      //2. add new item to data
+      const item = budgetController.addItem(
+        input.type,
+        input.description,
+        input.amount
+      );
     }
     //3. calculate budget data
     //4. add new item to UI
