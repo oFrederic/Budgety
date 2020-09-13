@@ -13,7 +13,7 @@ const UIController = (function () {
     DOMstring: {
       inputType: ".add__type",
       inputDescription: ".add__description",
-      inputAmount: ".add__value",
+      inputAmount: ".add__amount",
       inputBtn: ".add__btn",
     },
 
@@ -45,6 +45,7 @@ const controller = (function (budgetCtrl, UICtrl) {
     //1. get input value
     const input = UICtrl.getNewBudgetEntry();
     if (input.description !== "" && input.amount !== 0) {
+      console.log(input);
       //2. add new item to data
     }
     //3. calculate budget data
