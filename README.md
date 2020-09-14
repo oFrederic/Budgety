@@ -14,6 +14,7 @@ Build a mini interactive buget website. (Focusing on JavaSript part)
 - Closure
 - Module Pattern
 - Data Structure
+- Event Delegation
 
 Still in progress...
 

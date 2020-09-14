@@ -99,6 +99,8 @@ const UIController = (function () {
     incomeTag: ".budget__income--value",
     expenseTag: ".budget__expenses--value",
     percentage: ".budget__expenses--percentage",
+    container: ".container",
+    deleteIcon: "ion-ios-close-outline",
   };
 
   return {
@@ -131,15 +133,19 @@ const UIController = (function () {
       // create HTML with correct value
       if (type === "inc") {
         el = DOMstrings.incomeContainer;
-        html = `<div class="item clearfix" id="income-0"><div class="item__description">${obj.description}</div>
-          <div class="right clearfix"><div class="item__value">${obj.amount}</div><div class="item__delete">
-          <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div></div>`;
+        html = `<div class="item clearfix" id="inc-${obj.id}">
+        <div class="item__description">${obj.description}</div>
+        <div class="right clearfix"><div class="item__value">${obj.amount}
+        </div><div class="item__delete"><button class="item__delete--btn">
+        <i class="ion-ios-close-outline"></i></button></div></div>`;
       } else {
         el = DOMstrings.expensesContainer;
-        html = `<div class="item clearfix" id="expense-0"><div class="item__description">${obj.description}</div>
-          <div class="right clearfix"><div class="item__value">${obj.amount}</div><div class="item__percentage">21%</div>
-          <div class="item__delete"><button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button></div>
-          </div></div>`;
+        html = `<div class="item clearfix" id="exp-${obj.id}">
+        <div class="item__description">${obj.description}</div>
+        <div class="right clearfix"><div class="item__value">${obj.amount}
+        </div><div class="item__percentage">21%</div>
+        <div class="item__delete"><button class="item__delete--btn">
+        <i class="ion-ios-close-outline"></i></button></div></div></div>`;
       }
       // insert HTML
       document.querySelector(el).insertAdjacentHTML("beforeend", html);
@@ -157,6 +163,20 @@ const UIController = (function () {
         document.querySelector(DOMstrings.percentage).textContent = "--%";
       }
     },
+
+    getItemToDelete(event) {
+      if (event.target.className === DOMstrings.deleteIcon) {
+        const itemID = event.target.closest(".item").id;
+        const split = itemID.split("-");
+        const type = split[0];
+        const id = split[1];
+
+        return {
+          type: type,
+          id: id,
+        };
+      }
+    },
   };
 })();
 
@@ -171,10 +191,13 @@ const controller = (function (budgetCtrl, UICtrl) {
     document.addEventListener("keypress", function (event) {
       if (event.key === "Enter") ctrlAddItem();
     });
+    document
+      .querySelector(DOM.container)
+      .addEventListener("click", ctrlDeleteItem);
   };
 
   const ctrlAddItem = function () {
-    //1. get input value and clear field
+    //1. get input value and then clear the fields
     const input = UICtrl.getNewBudgetEntry();
     UICtrl.clearField();
     if (input.description !== "" && input.amount > 0 && !isNaN(input.amount)) {
@@ -189,6 +212,16 @@ const controller = (function (budgetCtrl, UICtrl) {
       //4. calculate and update budget
       updateBudget();
     }
+  };
+
+  const ctrlDeleteItem = function (event) {
+    // 1. get element to delete
+    const item = UICtrl.getItemToDelete(event);
+    console.log(item); // testing purpose
+    // 2. delete element from data structure
+    // 3. delete element from UI
+    // 4. re-calculate budget
+    // 5. update UI budget with correct data
   };
 
   const updateBudget = function () {
