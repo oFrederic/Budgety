@@ -16,8 +16,6 @@ Build a mini interactive buget website. (Focusing on JavaSript part)
 - Data Structure
 - Event Delegation
 
-Still in progress...
-
 <h2>Project status</h2>
 
-In Development...
+Finished
