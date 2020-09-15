@@ -134,6 +134,7 @@ const UIController = (function () {
     container: ".container",
     deleteIcon: "ion-ios-close-outline",
     expItemPerc: ".item__percentage",
+    dateTag: ".budget__title--month",
   };
 
   const formatNumber = function (num, type) {
@@ -241,6 +242,27 @@ const UIController = (function () {
       });
     },
 
+    displayMonth: function () {
+      const date = new Date();
+      const months = [
+        "January",
+        "Februry",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      document.querySelector(DOMstrings.dateTag).textContent = `${
+        months[date.getMonth()]
+      } ${date.getFullYear()}`;
+    },
+
     getItemToDelete(event) {
       if (event.target.className === DOMstrings.deleteIcon) {
         const itemID = event.target.closest(".item").id;
@@ -328,6 +350,7 @@ const controller = (function (budgetCtrl, UICtrl) {
 
   return {
     init: function () {
+      UICtrl.displayMonth();
       UICtrl.displayBudget({
         budget: 0,
         totalInc: 0,
