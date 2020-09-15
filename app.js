@@ -156,6 +156,16 @@ const UIController = (function () {
       return DOMstrings;
     },
 
+    changeType: function () {
+      const fields = document.querySelectorAll(
+        `${DOMstrings.inputType}, ${DOMstrings.inputDescription}, ${DOMstrings.inputAmount}`
+      );
+      fields.forEach(function (element) {
+        element.classList.toggle("red-focus");
+      });
+      document.querySelector(DOMstrings.inputBtn).classList.toggle("red");
+    },
+
     getNewBudgetEntry: function () {
       return {
         type: document.querySelector(DOMstrings.inputType).value, // inc or exp (+ or -)
@@ -285,7 +295,6 @@ const UIController = (function () {
 const controller = (function (budgetCtrl, UICtrl) {
   const setupEventListener = function () {
     const DOM = UICtrl.getDOMstrings();
-
     document.querySelector(DOM.inputBtn).addEventListener("click", ctrlAddItem);
     document.addEventListener("keypress", function (event) {
       if (event.key === "Enter") ctrlAddItem();
@@ -293,6 +302,9 @@ const controller = (function (budgetCtrl, UICtrl) {
     document
       .querySelector(DOM.container)
       .addEventListener("click", ctrlDeleteItem);
+    document
+      .querySelector(DOM.inputType)
+      .addEventListener("change", UICtrl.changeType);
   };
 
   const ctrlAddItem = function () {
