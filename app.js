@@ -136,6 +136,20 @@ const UIController = (function () {
     expItemPerc: ".item__percentage",
   };
 
+  const formatNumber = function (num, type) {
+    num = Math.abs(num);
+    num = num.toFixed(2);
+    numSplit = num.split(".");
+    int = numSplit[0];
+    dec = numSplit[1];
+    if (int.length > 3) {
+      for (var i = int.length - 3; i > 0; i = i - 3) {
+        int = int.slice(0, i) + "," + int.slice(i, int.length);
+      }
+    }
+    return `${type === "exp" ? "-" : "+"} ${int}.${dec}`;
+  };
+
   return {
     getDOMstrings: function () {
       return DOMstrings;
@@ -168,18 +182,26 @@ const UIController = (function () {
         el = DOMstrings.incomeContainer;
         html = `<div class="item clearfix" id="inc-${obj.id}">
         <div class="item__description">${obj.description}</div>
-        <div class="right clearfix"><div class="item__value">${obj.amount}
+        <div class="right clearfix"><div class="item__value">${formatNumber(
+          obj.amount,
+          type
+        )}
         </div><div class="item__delete"><button class="item__delete--btn">
         <i class="ion-ios-close-outline"></i></button></div></div>`;
       } else {
         el = DOMstrings.expensesContainer;
         html = `<div class="item clearfix" id="exp-${obj.id}">
         <div class="item__description">${obj.description}</div>
-        <div class="right clearfix"><div class="item__value">${obj.amount}
+        <div class="right clearfix"><div class="item__value">${formatNumber(
+          obj.amount,
+          type
+        )}
         </div><div class="item__percentage">--%</div>
         <div class="item__delete"><button class="item__delete--btn">
         <i class="ion-ios-close-outline"></i></button></div></div></div>`;
       }
+
+      //formatNumber(num, type)
       //insert HTML
       document.querySelector(el).insertAdjacentHTML("beforeend", html);
     },
@@ -190,10 +212,20 @@ const UIController = (function () {
     },
 
     displayBudget: function (obj) {
-      document.querySelector(DOMstrings.budgetTag).textContent = obj.budget;
-      document.querySelector(DOMstrings.budgetTag).textContent = obj.budget;
-      document.querySelector(DOMstrings.incomeTag).textContent = obj.totalInc;
-      document.querySelector(DOMstrings.expenseTag).textContent = obj.totalExp;
+      let type;
+      obj.budget > 0 ? (type = "inc") : (type = "exp");
+      document.querySelector(DOMstrings.budgetTag).textContent = formatNumber(
+        obj.budget,
+        type
+      );
+      document.querySelector(DOMstrings.incomeTag).textContent = formatNumber(
+        obj.totalInc,
+        "inc"
+      );
+      document.querySelector(DOMstrings.expenseTag).textContent = formatNumber(
+        obj.totalExp,
+        "exp"
+      );
       if (obj.percentage > 0) {
         document.querySelector(DOMstrings.percentage).textContent =
           obj.percentage + "%";
