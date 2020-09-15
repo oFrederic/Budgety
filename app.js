@@ -136,7 +136,7 @@ const UIController = (function () {
       field.item(0).focus();
     },
 
-    addBudgetUI: function (obj, type) {
+    addBudgetList: function (obj, type) {
       let el, html;
       // create HTML with correct value
       if (type === "inc") {
@@ -157,6 +157,11 @@ const UIController = (function () {
       }
       // insert HTML
       document.querySelector(el).insertAdjacentHTML("beforeend", html);
+    },
+
+    deleteBudgetListUI: function (obj) {
+      const selectorID = `${obj.type}-${obj.id}`;
+      document.getElementById(selectorID).remove();
     },
 
     displayBudget: function (obj) {
@@ -216,7 +221,7 @@ const controller = (function (budgetCtrl, UICtrl) {
         input.amount
       );
       //3. add input to UI
-      UICtrl.addBudgetUI(item, input.type);
+      UICtrl.addBudgetList(item, input.type);
       //4. calculate and update budget
       updateBudget();
     }
@@ -229,8 +234,9 @@ const controller = (function (budgetCtrl, UICtrl) {
       // 2. delete element from data structure
       budgetCtrl.deleteItem(item);
       // 3. delete element from UI
-      // 4. re-calculate budget
-      // 5. update UI budget with correct data
+      UICtrl.deleteBudgetListUI(item);
+      // 4. re-calculate and update UI budget with correct data
+      updateBudget();
     }
   };
 
