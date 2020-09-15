@@ -56,6 +56,14 @@ const budgetController = (function () {
       return item;
     },
 
+    deleteItem: function (obj) {
+      const DataID = data.allItems[obj.type].map(function (element) {
+        return element.id;
+      });
+      const index = DataID.indexOf(obj.id);
+      data.allItems[obj.type].splice(index, 1);
+    },
+
     calculateBudget: function () {
       // total inc and exp
       calculateTotal("inc");
@@ -173,7 +181,7 @@ const UIController = (function () {
 
         return {
           type: type,
-          id: id,
+          id: parseInt(id),
         };
       }
     },
@@ -217,11 +225,13 @@ const controller = (function (budgetCtrl, UICtrl) {
   const ctrlDeleteItem = function (event) {
     // 1. get element to delete
     const item = UICtrl.getItemToDelete(event);
-    console.log(item); // testing purpose
-    // 2. delete element from data structure
-    // 3. delete element from UI
-    // 4. re-calculate budget
-    // 5. update UI budget with correct data
+    if (item !== undefined) {
+      // 2. delete element from data structure
+      budgetCtrl.deleteItem(item);
+      // 3. delete element from UI
+      // 4. re-calculate budget
+      // 5. update UI budget with correct data
+    }
   };
 
   const updateBudget = function () {
